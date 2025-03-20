@@ -8,10 +8,15 @@
     </div>
     <div class="collapse navbar-collapse" [ngStyle]="{'display': isNavbarOpen ? 'block': 'none'}">
       <ul class="nav navbar-nav navbar-right">
-        <li><a>Home</a></li>
-        <li><a>About</a></li>
-        <li><a>Services</a></li>
-        <li><a>Contact</a></li>
+        <li>
+          <a [routerLink]="'/'">Home</a>
+        </li>
+        <li>
+          <a [routerLink]="'/about'">About</a>
+        </li>
+        <li>
+          <a [routerLink]="'/contact'">Contact</a>
+        </li>
       </ul>
     </div>
   </div>
