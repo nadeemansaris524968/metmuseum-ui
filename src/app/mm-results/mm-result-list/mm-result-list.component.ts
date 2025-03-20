@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ArtItem } from '../../shared/model/art-item.model';
+import { ArtService } from '../../shared/services/art.service';
 
 @Component({
   selector: 'app-mm-result-list',
@@ -7,147 +8,12 @@ import { ArtItem } from '../../shared/model/art-item.model';
   templateUrl: './mm-result-list.component.html',
   styleUrl: './mm-result-list.component.css',
 })
-export class MmResultListComponent {
-  artItems: ArtItem[] = [
-    new ArtItem(
-      34,
-      false,
-      'https://images.metmuseum.org/CRDImages/ad/original/204788.jpg',
-      'https://images.metmuseum.org/CRDImages/ad/web-large/204788.jpg',
-      [],
-      'The American Wing',
-      'Forestville Manufacturing Company',
-      'Acorn Clock',
-      'Forestville Manufacturing Company',
-      '1847–50',
-      'Mahogany, laminated',
-      '24 3/8 x 14 5/8 x 5 1/8 in. (61.9 x 37.1 x 13 cm)',
-      'Gift of Mrs. Paul Moore, 1970',
-      'Bristol',
-      'Connecticut',
-      'United States',
-      '',
-      ''
-    ),
-    new ArtItem(
-      38,
-      false,
-      'https://images.metmuseum.org/CRDImages/ad/original/DP247753.jpg',
-      'https://images.metmuseum.org/CRDImages/ad/web-large/DP247753.jpg',
-      ['https://images.metmuseum.org/CRDImages/ad/original/DP247755.jpg'],
-      'The American Wing',
-      'Figure',
-      'Figure of Admiral Samuel Hood',
-      'Pierre Stephan',
-      'ca. 1785',
-      'Earthenware, basalt',
-      'H. 12 3/8 in. (31.4 cm)',
-      'Harris Brisbane Dick Fund, 1938',
-      '',
-      '',
-      'England',
-      '',
-      'https://www.metmuseum.org/art/collection/search/38'
-    ),
-    new ArtItem(
-      34,
-      false,
-      'https://images.metmuseum.org/CRDImages/ad/original/204788.jpg',
-      'https://images.metmuseum.org/CRDImages/ad/web-large/204788.jpg',
-      [],
-      'The American Wing',
-      'Forestville Manufacturing Company',
-      'Acorn Clock',
-      'Forestville Manufacturing Company',
-      '1847–50',
-      'Mahogany, laminated',
-      '24 3/8 x 14 5/8 x 5 1/8 in. (61.9 x 37.1 x 13 cm)',
-      'Gift of Mrs. Paul Moore, 1970',
-      'Bristol',
-      'Connecticut',
-      'United States',
-      '',
-      ''
-    ),
-    new ArtItem(
-      38,
-      false,
-      'https://images.metmuseum.org/CRDImages/ad/original/DP247753.jpg',
-      'https://images.metmuseum.org/CRDImages/ad/web-large/DP247753.jpg',
-      ['https://images.metmuseum.org/CRDImages/ad/original/DP247755.jpg'],
-      'The American Wing',
-      'Figure',
-      'Figure of Admiral Samuel Hood',
-      'Pierre Stephan',
-      'ca. 1785',
-      'Earthenware, basalt',
-      'H. 12 3/8 in. (31.4 cm)',
-      'Harris Brisbane Dick Fund, 1938',
-      '',
-      '',
-      'England',
-      '',
-      'https://www.metmuseum.org/art/collection/search/38'
-    ),
-    new ArtItem(
-      34,
-      false,
-      'https://images.metmuseum.org/CRDImages/ad/original/204788.jpg',
-      'https://images.metmuseum.org/CRDImages/ad/web-large/204788.jpg',
-      [],
-      'The American Wing',
-      'Forestville Manufacturing Company',
-      'Acorn Clock',
-      'Forestville Manufacturing Company',
-      '1847–50',
-      'Mahogany, laminated',
-      '24 3/8 x 14 5/8 x 5 1/8 in. (61.9 x 37.1 x 13 cm)',
-      'Gift of Mrs. Paul Moore, 1970',
-      'Bristol',
-      'Connecticut',
-      'United States',
-      '',
-      ''
-    ),
-    new ArtItem(
-      38,
-      false,
-      'https://images.metmuseum.org/CRDImages/ad/original/DP247753.jpg',
-      'https://images.metmuseum.org/CRDImages/ad/web-large/DP247753.jpg',
-      ['https://images.metmuseum.org/CRDImages/ad/original/DP247755.jpg'],
-      'The American Wing',
-      'Figure',
-      'Figure of Admiral Samuel Hood',
-      'Pierre Stephan',
-      'ca. 1785',
-      'Earthenware, basalt',
-      'H. 12 3/8 in. (31.4 cm)',
-      'Harris Brisbane Dick Fund, 1938',
-      '',
-      '',
-      'England',
-      '',
-      'https://www.metmuseum.org/art/collection/search/38'
-    ),
-    new ArtItem(
-      34,
-      false,
-      'https://images.metmuseum.org/CRDImages/ad/original/204788.jpg',
-      'https://images.metmuseum.org/CRDImages/ad/web-large/204788.jpg',
-      [],
-      'The American Wing',
-      'Forestville Manufacturing Company',
-      'Acorn Clock',
-      'Forestville Manufacturing Company',
-      '1847–50',
-      'Mahogany, laminated',
-      '24 3/8 x 14 5/8 x 5 1/8 in. (61.9 x 37.1 x 13 cm)',
-      'Gift of Mrs. Paul Moore, 1970',
-      'Bristol',
-      'Connecticut',
-      'United States',
-      '',
-      ''
-    ),
-  ];
+export class MmResultListComponent implements OnInit {
+  artItems: ArtItem[];
+
+  constructor(private artService: ArtService) {}
+
+  ngOnInit(): void {
+    this.artItems = this.artService.getArtItems();
+  }
 }
