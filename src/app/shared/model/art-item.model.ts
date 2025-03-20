@@ -16,6 +16,7 @@ export class ArtItem {
     public city: string,
     public state: string,
     public country: string,
-    public classification: string
+    public classification: string,
+    public objectURL: string
   ) {}
 }

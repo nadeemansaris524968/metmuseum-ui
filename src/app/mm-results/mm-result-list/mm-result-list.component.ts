@@ -26,6 +26,7 @@ export class MmResultListComponent {
       'Bristol',
       'Connecticut',
       'United States',
+      '',
       ''
     ),
     new ArtItem(
@@ -45,7 +46,8 @@ export class MmResultListComponent {
       '',
       '',
       'England',
-      ''
+      '',
+      'https://www.metmuseum.org/art/collection/search/38'
     ),
     new ArtItem(
       34,
@@ -64,6 +66,7 @@ export class MmResultListComponent {
       'Bristol',
       'Connecticut',
       'United States',
+      '',
       ''
     ),
     new ArtItem(
@@ -83,7 +86,8 @@ export class MmResultListComponent {
       '',
       '',
       'England',
-      ''
+      '',
+      'https://www.metmuseum.org/art/collection/search/38'
     ),
     new ArtItem(
       34,
@@ -102,6 +106,7 @@ export class MmResultListComponent {
       'Bristol',
       'Connecticut',
       'United States',
+      '',
       ''
     ),
     new ArtItem(
@@ -121,7 +126,8 @@ export class MmResultListComponent {
       '',
       '',
       'England',
-      ''
+      '',
+      'https://www.metmuseum.org/art/collection/search/38'
     ),
     new ArtItem(
       34,
@@ -140,6 +146,7 @@ export class MmResultListComponent {
       'Bristol',
       'Connecticut',
       'United States',
+      '',
       ''
     ),
   ];
