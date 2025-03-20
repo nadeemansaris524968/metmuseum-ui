@@ -1,10 +1,14 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { ArtItem } from '../model/art-item.model';
+import { ArtObjectResult } from '../model/art-object-result.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArtService {
+  artObjectResult: ArtObjectResult;
+  artItemsChanged = new EventEmitter<ArtItem[]>();
+
   artItems: ArtItem[] = [
     new ArtItem(
       34,
