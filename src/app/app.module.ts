@@ -6,6 +6,7 @@ import { MmHeaderComponent } from './mm-header/mm-header.component';
 import { MmResultItemComponent } from './mm-result-list/mm-result-item/mm-result-item.component';
 import { MmResultListComponent } from './mm-result-list/mm-result-list.component';
 import { MmSearchComponent } from './mm-search/mm-search.component';
+import { MmAuthComponent } from './mm-auth/mm-auth.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { MmSearchComponent } from './mm-search/mm-search.component';
     MmSearchComponent,
     MmResultListComponent,
     MmResultItemComponent,
+    MmAuthComponent,
   ],
   imports: [BrowserModule, CommonModule],
   bootstrap: [AppComponent],
