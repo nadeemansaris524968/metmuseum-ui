@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-mm-result-item',
   standalone: false,
   templateUrl: './mm-result-item.component.html',
-  styleUrl: './mm-result-item.component.css'
+  styleUrl: './mm-result-item.component.css',
 })
-export class MmResultItemComponent {
-
-}
+export class MmResultItemComponent {}
