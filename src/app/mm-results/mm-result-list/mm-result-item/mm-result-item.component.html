@@ -1,14 +1,17 @@
 <div class="row">
-  <div class="col-md-12">
-    <!-- <div class="thumbnail">
-      <img src="https://images.metmuseum.org/CRDImages/ad/web-large/204788.jpg" alt="art-item" class="img-responsive">
+  <div class="col-xs-12">
+    <div class="thumbnail">
+      <a href="#">
+        <img [src]="artItem.primaryImageSmall" [alt]="artItem.objectName" class="img-responsive"
+          style="max-height: 300px;">
+      </a>
       <div class="caption">
-        <h4>Art Title</h4>
+        <h4>{{artItem.title}}</h4>
         <p>Art description - Lorem ipsum dolor sit</p>
         <p>
-          <a href="#" class="btn btn-primary">View</a>
+          <a href="#" class="btn btn-default">View</a>
         </p>
       </div>
-    </div> -->
+    </div>
   </div>
 </div>

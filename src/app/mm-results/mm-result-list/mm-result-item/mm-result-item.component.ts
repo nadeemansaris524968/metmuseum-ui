@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ArtItem } from '../../../shared/model/art-item.model';
 
 @Component({
   selector: 'app-mm-result-item',
@@ -6,4 +7,6 @@ import { Component } from '@angular/core';
   templateUrl: './mm-result-item.component.html',
   styleUrl: './mm-result-item.component.css',
 })
-export class MmResultItemComponent {}
+export class MmResultItemComponent {
+  @Input() artItem: ArtItem;
+}
