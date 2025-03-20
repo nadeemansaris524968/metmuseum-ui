@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ArtItem } from '../shared/model/art-item.model';
+import { ArtItem } from '../../shared/model/art-item.model';
 
 @Component({
   selector: 'app-mm-result-list',
