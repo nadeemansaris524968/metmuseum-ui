@@ -2,12 +2,11 @@
   <div class="col-xs-12">
     <div class="thumbnail">
       <a [routerLink]="['/art-detail', artItem.objectID]">
-        <img [src]="artItem.primaryImageSmall" [alt]="artItem.objectName" class="img-responsive"
-          style="max-height: 200px;">
+        <img [src]="artItem.primaryImageSmall || '/no-image-found.png'" [alt]="artItem.objectName"
+          class="img-responsive" style="max-height: 200px; min-height: 200px;">
       </a>
       <div class="caption">
-        <h4>{{artItem.title}}</h4>
-        <p>Art description - Lorem ipsum dolor sit</p>
+        <h4>{{artItem.title || 'No Title'}}</h4>
         <p>
           <a [routerLink]="['/art-detail', artItem.objectID]" class="btn btn-default">View</a>
         </p>
