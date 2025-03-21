@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MmSearchComponent } from './mm-search.component';
+import { SearchComponent } from './search.component';
 
 describe('MmSearchComponent', () => {
-  let component: MmSearchComponent;
-  let fixture: ComponentFixture<MmSearchComponent>;
+  let component: SearchComponent;
+  let fixture: ComponentFixture<SearchComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MmSearchComponent]
-    })
-    .compileComponents();
+      declarations: [SearchComponent],
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(MmSearchComponent);
+    fixture = TestBed.createComponent(SearchComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

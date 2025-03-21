@@ -1,12 +1,12 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-mm-search',
+  selector: 'app-search',
   standalone: false,
-  templateUrl: './mm-search.component.html',
-  styleUrl: './mm-search.component.css',
+  templateUrl: './search.component.html',
+  styleUrl: './search.component.css',
 })
-export class MmSearchComponent {
+export class SearchComponent {
   @ViewChild('idQuery') idQuery: ElementRef;
   @ViewChild('titleQuery') titleQuery: ElementRef;
   @ViewChild('departmentFilter') departmentFilter: ElementRef;

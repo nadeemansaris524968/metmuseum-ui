@@ -4,9 +4,9 @@ import { ArtItem } from '../../../shared/model/art-item.model';
 @Component({
   selector: 'app-mm-result-item',
   standalone: false,
-  templateUrl: './mm-result-item.component.html',
-  styleUrl: './mm-result-item.component.css',
+  templateUrl: './art-item.component.html',
+  styleUrl: './art-item.component.css',
 })
-export class MmResultItemComponent {
+export class ArtItemComponent {
   @Input() artItem: ArtItem;
 }

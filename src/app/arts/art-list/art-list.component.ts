@@ -4,12 +4,12 @@ import { ArtObjectResult } from '../../shared/model/art-object-result.model';
 import { ArtService } from '../../shared/services/art.service';
 
 @Component({
-  selector: 'app-mm-result-list',
+  selector: 'app-art-list',
   standalone: false,
-  templateUrl: './mm-result-list.component.html',
-  styleUrl: './mm-result-list.component.css',
+  templateUrl: './art-list.component.html',
+  styleUrl: './art-list.component.css',
 })
-export class MmResultListComponent implements OnInit {
+export class ArtListComponent implements OnInit {
   artObjectResult: ArtObjectResult;
   artItems: ArtItem[];
 

@@ -4,14 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { MmAuthComponent } from './mm-auth/mm-auth.component';
-import { MmHeaderComponent } from './mm-header/mm-header.component';
-import { MmResultDetailComponent } from './mm-results/mm-result-detail/mm-result-detail.component';
-import { MmResultItemComponent } from './mm-results/mm-result-list/mm-result-item/mm-result-item.component';
-import { MmResultListComponent } from './mm-results/mm-result-list/mm-result-list.component';
-import { MmResultsComponent } from './mm-results/mm-results.component';
-import { MmSearchComponent } from './mm-results/mm-search/mm-search.component';
-import { AboutComponent } from './shared/links/about/about.component';
+import { ArtDetailComponent } from './arts/art-detail/art-detail.component';
+import { ArtItemComponent } from './arts/art-list/art-item/art-item.component';
+import { ArtListComponent } from './arts/art-list/art-list.component';
+import { ArtsComponent } from './arts/arts.component';
+import { SearchComponent } from './arts/search/search.component';
+import { HeaderComponent } from './header/header.component';
+import { AboutComponent } from './about/about.component';
 
 const appRoutes: Routes = [
   {
@@ -21,11 +20,11 @@ const appRoutes: Routes = [
   },
   {
     path: 'art-results',
-    component: MmResultsComponent,
+    component: ArtsComponent,
   },
   {
     path: 'art-detail',
-    component: MmResultDetailComponent,
+    component: ArtDetailComponent,
   },
   {
     path: 'about',
@@ -36,13 +35,12 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    MmHeaderComponent,
-    MmSearchComponent,
-    MmResultListComponent,
-    MmResultItemComponent,
-    MmAuthComponent,
-    MmResultsComponent,
-    MmResultDetailComponent,
+    HeaderComponent,
+    SearchComponent,
+    ArtListComponent,
+    ArtItemComponent,
+    ArtsComponent,
+    ArtDetailComponent,
   ],
   imports: [
     BrowserModule,

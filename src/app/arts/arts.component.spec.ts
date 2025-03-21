@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MmHeaderComponent } from './mm-header.component';
+import { ArtsComponent } from './arts.component';
 
-describe('HeaderComponent', () => {
-  let component: MmHeaderComponent;
-  let fixture: ComponentFixture<MmHeaderComponent>;
+describe('ArtsComponent', () => {
+  let component: ArtsComponent;
+  let fixture: ComponentFixture<ArtsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MmHeaderComponent],
+      declarations: [ArtsComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MmHeaderComponent);
+    fixture = TestBed.createComponent(ArtsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

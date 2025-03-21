@@ -1,18 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { MmResultItemComponent } from './mm-result-item.component';
+import { ArtItemComponent } from './art-item.component';
 
 describe('MmResultItemComponent', () => {
-  let component: MmResultItemComponent;
-  let fixture: ComponentFixture<MmResultItemComponent>;
+  let component: ArtItemComponent;
+  let fixture: ComponentFixture<ArtItemComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MmResultItemComponent]
-    })
-    .compileComponents();
+      declarations: [ArtItemComponent],
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(MmResultItemComponent);
+    fixture = TestBed.createComponent(ArtItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
