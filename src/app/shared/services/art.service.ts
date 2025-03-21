@@ -20,6 +20,13 @@ export class ArtService {
   }
 
   fetchArtObjectsIDs() {
+    if (this.artObjectIDs) {
+      return of({
+        total: this.artObjectIDs.length,
+        objectIDs: this.artObjectIDs,
+      });
+    }
+
     return this.http
       .get<{ total: number; objectIDs: number[] }>(environment.objectIDsURL)
       .pipe(

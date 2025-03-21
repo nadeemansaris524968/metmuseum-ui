@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { forkJoin, Observable, switchMap } from 'rxjs';
 import { ArtItem } from '../shared/model/art-item.model';
 import { ArtService } from '../shared/services/art.service';
@@ -9,26 +9,23 @@ import { ArtService } from '../shared/services/art.service';
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.css',
 })
-export class GalleryComponent implements OnInit {
+export class GalleryComponent {
   currentPage: number;
   paginatedArtItems$: Observable<ArtItem[]> = new Observable();
 
   constructor(private artService: ArtService) {
-    this.artService.fetchArtObjectsIDs().subscribe((_) => {
+    this.artService.fetchArtObjectsIDs().subscribe((ids) => {
       this.loadPage();
     });
   }
 
-  ngOnInit(): void {
+  loadPage() {
     if (localStorage.getItem('currentPageNumber')) {
       this.currentPage = parseInt(localStorage.getItem('currentPageNumber'));
     } else {
       this.currentPage = 1;
       localStorage.setItem('currentPageNumber', this.currentPage.toString());
     }
-  }
-
-  loadPage() {
     this.paginatedArtItems$ = this.artService
       .getPaginatedIDs(this.currentPage)
       .pipe(
