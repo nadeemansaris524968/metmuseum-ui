@@ -3,9 +3,11 @@
     <a [routerLink]="'/'" class="btn btn-primary">Go Back</a>
   </div>
 </div>
+<hr>
 <div class="row">
   <div class="col-xs-12">
-    <img [src]="artItem.primaryImage" style="max-height: 500px;" [alt]="artItem.title" class="img-responsive">
+    <img [src]="artItem.primaryImage || '/no-image-found.png'" style="max-height: 500px;" [alt]="artItem.title"
+      class="img-responsive">
   </div>
 </div>
 <div class="row">
