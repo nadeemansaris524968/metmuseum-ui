@@ -1,13 +1,17 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { ArtItem } from '../model/art-item.model';
-import { ArtObjectResult } from '../model/art-object-result.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArtService {
-  artObjectResult: ArtObjectResult;
+  artObjectIDs: number[];
+  private readonly _pageSize: number;
   artItemsChanged = new EventEmitter<ArtItem[]>();
+
+  constructor() {
+    this._pageSize = 10;
+  }
 
   artItems: ArtItem[] = [
     new ArtItem(
@@ -152,15 +156,19 @@ export class ArtService {
     ),
   ];
 
-  getArtItems(pageNumber: number = 1, pageSize: number = 20): ArtItem[] {
-    if (pageNumber < 1 || pageSize < 1) {
+  getArtItems(pageNumber: number = 1): ArtItem[] {
+    if (pageNumber < 1 || this._pageSize < 1) {
       return [];
     }
 
-    const startIndex = (pageNumber - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
+    const startIndex = (pageNumber - 1) * this._pageSize;
+    const endIndex = startIndex + this._pageSize;
     const result = this.artItems.slice(startIndex, endIndex);
 
     return result;
+  }
+
+  getArtItem(objectID: number) {
+    return this.artItems.find((item) => item.objectID === objectID);
   }
 }

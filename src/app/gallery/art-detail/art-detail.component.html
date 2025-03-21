@@ -5,22 +5,18 @@
 </div>
 <div class="row">
   <div class="col-xs-12">
-    <img src="" alt="" class="img-responsive">
+    <img [src]="artItem.primaryImage" style="max-height: 500px;" [alt]="artItem.title" class="img-responsive">
   </div>
 </div>
 <div class="row">
   <div class="col-xs-12">
-    <h1>Art Title</h1>
+    <h1>{{artItem.title}}</h1>
   </div>
 </div>
 <div class="row">
   <div class="col-xs-12">
-    <div class="btn-group">
-      <button class="btn btn-primary dropdown-toggle">Options <span class="caret"></span></button>
-      <ul class="dropdown-menu">
-        <li><a href="#">View at Met Musuem</a></li>
-      </ul>
-    </div>
+    <a *ngIf="artItem.objectURL !== ''" [href]="artItem.objectURL">View on Met Museum
+      Website</a>
   </div>
 </div>
 <div class="row">

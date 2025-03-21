@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ArtItem } from '../../shared/model/art-item.model';
-import { ArtObjectResult } from '../../shared/model/art-object-result.model';
 import { ArtService } from '../../shared/services/art.service';
 
 @Component({
@@ -10,7 +9,6 @@ import { ArtService } from '../../shared/services/art.service';
   styleUrl: './art-list.component.css',
 })
 export class ArtListComponent implements OnInit {
-  artObjectResult: ArtObjectResult;
   artItems: ArtItem[];
 
   constructor(private artService: ArtService) {

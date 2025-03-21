@@ -9,7 +9,7 @@
         <h4>{{artItem.title}}</h4>
         <p>Art description - Lorem ipsum dolor sit</p>
         <p>
-          <a href="#" class="btn btn-default">View</a>
+          <a [routerLink]="['/art-detail', artItem.objectID]" class="btn btn-default">View</a>
         </p>
       </div>
     </div>
