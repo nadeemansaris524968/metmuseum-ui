@@ -1,2 +1,17 @@
 <app-search></app-search>
-<app-art-list></app-art-list>
+<!-- <app-art-list></app-art-list> -->
+<div class="row">
+  <div class="col-xs-12 text-center">
+    <button class="btn btn-default" (click)="decrementPageNumber()" [disabled]="currentPage === 1">Previous</button>
+    |
+    <button class="btn btn-primary" (click)="incrementPageNumber()">Next</button>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="col-xs-6 col-md-4" *ngFor="let artItem of paginatedArtItems$ | async">
+      <app-art-item [artItem]="artItem"></app-art-item>
+    </div>
+  </div>
+</div>
