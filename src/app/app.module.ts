@@ -3,27 +3,23 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
-import { ArtDetailComponent } from './arts/art-detail/art-detail.component';
-import { ArtItemComponent } from './arts/art-list/art-item/art-item.component';
-import { ArtListComponent } from './arts/art-list/art-list.component';
-import { ArtsComponent } from './arts/arts.component';
-import { SearchComponent } from './arts/search/search.component';
-import { HeaderComponent } from './header/header.component';
 import { AboutComponent } from './about/about.component';
+import { AppComponent } from './app.component';
+import { ArtDetailComponent } from './gallery/art-detail/art-detail.component';
+import { ArtItemComponent } from './gallery/art-list/art-item/art-item.component';
+import { ArtListComponent } from './gallery/art-list/art-list.component';
+import { GalleryComponent } from './gallery/gallery.component';
+import { SearchComponent } from './gallery/search/search.component';
+import { HeaderComponent } from './header/header.component';
 
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/art-results',
+    component: GalleryComponent,
     pathMatch: 'full',
   },
   {
-    path: 'art-results',
-    component: ArtsComponent,
-  },
-  {
-    path: 'art-detail',
+    path: 'art-detail/:id',
     component: ArtDetailComponent,
   },
   {
@@ -39,7 +35,7 @@ const appRoutes: Routes = [
     SearchComponent,
     ArtListComponent,
     ArtItemComponent,
-    ArtsComponent,
+    GalleryComponent,
     ArtDetailComponent,
   ],
   imports: [
