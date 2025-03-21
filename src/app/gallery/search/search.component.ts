@@ -1,4 +1,9 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { ArtDepartment } from '../../shared/model/art-department.model';
+import { ArtService } from '../../shared/services/art.service';
 
 @Component({
   selector: 'app-search',
@@ -6,14 +11,26 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
 })
-export class SearchComponent {
-  @ViewChild('idQuery') idQuery: ElementRef;
-  @ViewChild('titleQuery') titleQuery: ElementRef;
-  @ViewChild('departmentFilter') departmentFilter: ElementRef;
+export class SearchComponent implements OnInit, OnDestroy {
+  departments: ArtDepartment[];
+  departmentsSub: Subscription;
 
-  onSubmit() {
-    console.log(
-      `ID: ${this.idQuery.nativeElement.value}, Title: ${this.titleQuery.nativeElement.value}, Department Filter: ${this.departmentFilter.nativeElement.value}`
+  constructor(private artService: ArtService, private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.artService.getDepartments();
+    this.departmentsSub = this.artService.artDepartmentsChanged.subscribe(
+      (data) => {
+        this.departments = data;
+      }
     );
+  }
+
+  onSubmit(searchForm: NgForm) {
+    console.log(searchForm.value);
+  }
+
+  ngOnDestroy(): void {
+    this.departmentsSub.unsubscribe();
   }
 }

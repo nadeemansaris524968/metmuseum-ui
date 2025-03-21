@@ -1,17 +1,19 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
-import { Observable, of, tap } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { ArtDepartment } from '../model/art-department.model';
 import { ArtItem } from '../model/art-item.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArtService {
-  artObjectIDs: number[];
   private artItemCache = new Map<number, ArtItem>();
   private readonly _pageSize: number;
-  artItemsChanged = new EventEmitter<ArtItem[]>();
+  private artObjectIDs: number[];
+
+  artDepartmentsChanged = new BehaviorSubject<ArtDepartment[]>([]);
 
   constructor(private http: HttpClient) {
     this._pageSize = 10;
@@ -48,5 +50,13 @@ export class ArtService {
 
   getArtItem(objectID: number) {
     return this.artItemCache.get(objectID);
+  }
+
+  getDepartments() {
+    return this.http
+      .get<{ departments: ArtDepartment[] }>(environment.departmentsURL)
+      .subscribe((data) => {
+        this.artDepartmentsChanged.next(data.departments);
+      });
   }
 }

@@ -1,34 +1,34 @@
 <div class="row">
   <div class="col-xs-6 col-xs-offset-3">
-    <div class="row">
-      <div class="col-xs-4">
-        <div class="form-group">
-          <input type="number" class="form-control" placeholder="Search By id" #idQuery>
+    <form (ngSubmit)="onSubmit(searchForm)" #searchForm="ngForm">
+      <div class="row">
+        <div class="col-xs-4">
+          <div class="form-group">
+            <input type="number" class="form-control" placeholder="Search By id" ngModel name="objectID">
+          </div>
+        </div>
+        <div class="col-xs-8">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search By title" ngModel name="artTitle">
+          </div>
         </div>
       </div>
-      <div class="col-xs-8">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search By title" #titleQuery>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="filter">Filter By Department</label>
+            <select id="filter" class="form-control" ngModel name="departmentID">
+              <option *ngFor="let dept of departments" [value]="dept.departmentId">{{dept.displayName}}</option>
+            </select>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="form-group">
-          <label for="filter">Filter By Department</label>
-          <select name="departmentIds" id="filter" class="form-control" #departmentFilter>
-            <option value="1">American Decorative Arts</option>
-            <option value="3">Ancient Near Eastern Art</option>
-            <option value="4">Arms and Armor</option>
-          </select>
+      <div class="row pull-right">
+        <div class="col-xs-12">
+          <button class="btn btn-primary">Submit</button>
         </div>
       </div>
-    </div>
-    <div class="row pull-right">
-      <div class="col-xs-12">
-        <button class="btn btn-primary" (click)="onSubmit()">Submit</button>
-      </div>
-    </div>
+    </form>
   </div>
 </div>
 <hr>
