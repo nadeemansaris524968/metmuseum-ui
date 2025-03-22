@@ -52,6 +52,9 @@ export class ArtService {
   getPaginatedIDs(pageNumber: number): Observable<number[]> {
     const start = (pageNumber - 1) * this._pageSize;
     const end = start + this._pageSize;
+    if (!this.artObjectIDs) {
+      return of([]);
+    }
     return of(this.artObjectIDs.slice(start, end));
   }
 

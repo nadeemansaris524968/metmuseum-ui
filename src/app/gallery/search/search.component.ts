@@ -29,7 +29,9 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.artService.getArtObjectById(searchByIdForm.value.objectID);
   }
 
-  onSubmitByOther(searchByOtherForm: NgForm) {}
+  onSubmitByOther(searchByOtherForm: NgForm) {
+    console.log(searchByOtherForm.value);
+  }
 
   ngOnDestroy(): void {
     this.departmentsSub.unsubscribe();

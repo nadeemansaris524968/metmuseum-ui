@@ -15,7 +15,7 @@ export class GalleryComponent implements OnDestroy {
   artObjectIDSub: Subscription;
 
   constructor(private artService: ArtService) {
-    this.artService.fetchArtObjectsIDs().subscribe((ids) => {
+    this.artService.fetchArtObjectsIDs().subscribe(() => {
       this.loadPage();
     });
 
