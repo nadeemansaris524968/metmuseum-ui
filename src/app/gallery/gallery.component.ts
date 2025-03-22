@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { forkJoin, Observable, switchMap } from 'rxjs';
+import { Component, OnDestroy } from '@angular/core';
+import { forkJoin, Observable, Subscription, switchMap } from 'rxjs';
 import { ArtItem } from '../shared/model/art-item.model';
 import { ArtService } from '../shared/services/art.service';
 
@@ -9,14 +9,24 @@ import { ArtService } from '../shared/services/art.service';
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.css',
 })
-export class GalleryComponent {
+export class GalleryComponent implements OnDestroy {
   currentPage: number;
   paginatedArtItems$: Observable<ArtItem[]> = new Observable();
+  artObjectIDSub: Subscription;
 
   constructor(private artService: ArtService) {
     this.artService.fetchArtObjectsIDs().subscribe((ids) => {
       this.loadPage();
     });
+
+    this.artObjectIDSub = this.artService.artObjectIDsChanged.subscribe(() => {
+      localStorage.setItem('currentPageNumber', '1');
+      this.loadPage();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.artObjectIDSub.unsubscribe();
   }
 
   loadPage() {

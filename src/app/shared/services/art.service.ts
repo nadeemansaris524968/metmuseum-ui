@@ -13,6 +13,7 @@ export class ArtService {
   private readonly _pageSize: number;
   private artObjectIDs: number[];
 
+  artObjectIDsChanged = new BehaviorSubject<number[]>([]);
   artDepartmentsChanged = new BehaviorSubject<ArtDepartment[]>([]);
 
   constructor(private http: HttpClient) {
@@ -32,8 +33,20 @@ export class ArtService {
       .pipe(
         tap((data) => {
           this.artObjectIDs = data.objectIDs;
+          this.artObjectIDsChanged.next(this.artObjectIDs);
         })
       );
+  }
+
+  getArtObjectById(objectID: number) {
+    const foundIndex = this.artObjectIDs.findIndex((id) => id === objectID);
+    if (foundIndex >= 0) {
+      this.artObjectIDs = this.artObjectIDs.filter((id) => id === objectID);
+      this.artObjectIDsChanged.next(this.artObjectIDs);
+    } else {
+      this.artObjectIDs = [];
+      this.artObjectIDsChanged.next(this.artObjectIDs);
+    }
   }
 
   getPaginatedIDs(pageNumber: number): Observable<number[]> {
