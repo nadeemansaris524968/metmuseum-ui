@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { forkJoin, Observable, Subscription, switchMap } from 'rxjs';
 import { ArtItem } from '../shared/model/art-item.model';
 import { ArtService } from '../shared/services/art.service';
+import { PaginationService } from '../shared/services/pagination.service';
 
 @Component({
   selector: 'app-gallery',
@@ -13,29 +14,33 @@ export class GalleryComponent implements OnDestroy {
   currentPage: number;
   paginatedArtItems$: Observable<ArtItem[]> = new Observable();
   artObjectIDSub: Subscription;
+  currentPgSub: Subscription;
 
-  constructor(private artService: ArtService) {
+  constructor(
+    private artService: ArtService,
+    private paginationService: PaginationService
+  ) {
     this.artService.fetchArtObjectsIDs().subscribe(() => {
       this.loadPage();
     });
 
+    this.currentPgSub = this.paginationService.currentPageChanged.subscribe(
+      (updatedPgNo) => {
+        this.currentPage = updatedPgNo;
+      }
+    );
+
     this.artObjectIDSub = this.artService.artObjectIDsChanged.subscribe(() => {
-      this.setCurrentPageLocalStorage(1);
       this.loadPage();
     });
   }
 
   ngOnDestroy(): void {
     this.artObjectIDSub.unsubscribe();
+    this.currentPgSub.unsubscribe();
   }
 
   loadPage() {
-    if (localStorage.getItem('currentPageNumber')) {
-      this.currentPage = parseInt(localStorage.getItem('currentPageNumber'));
-    } else {
-      this.currentPage = 1;
-      this.setCurrentPageLocalStorage(this.currentPage);
-    }
     this.paginatedArtItems$ = this.artService
       .getPaginatedIDs(this.currentPage)
       .pipe(
@@ -49,14 +54,12 @@ export class GalleryComponent implements OnDestroy {
   }
 
   incrementPageNumber() {
-    this.currentPage += 1;
-    this.setCurrentPageLocalStorage(this.currentPage);
+    this.paginationService.moveToNextPage();
     this.loadPage();
   }
 
   decrementPageNumber() {
-    this.currentPage -= 1;
-    this.setCurrentPageLocalStorage(this.currentPage);
+    this.paginationService.moveToPreviousPage();
     this.loadPage();
   }
 
