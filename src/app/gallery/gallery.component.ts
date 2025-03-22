@@ -20,7 +20,7 @@ export class GalleryComponent implements OnDestroy {
     });
 
     this.artObjectIDSub = this.artService.artObjectIDsChanged.subscribe(() => {
-      localStorage.setItem('currentPageNumber', '1');
+      this.setCurrentPageLocalStorage(1);
       this.loadPage();
     });
   }
@@ -34,7 +34,7 @@ export class GalleryComponent implements OnDestroy {
       this.currentPage = parseInt(localStorage.getItem('currentPageNumber'));
     } else {
       this.currentPage = 1;
-      localStorage.setItem('currentPageNumber', this.currentPage.toString());
+      this.setCurrentPageLocalStorage(this.currentPage);
     }
     this.paginatedArtItems$ = this.artService
       .getPaginatedIDs(this.currentPage)
@@ -50,13 +50,17 @@ export class GalleryComponent implements OnDestroy {
 
   incrementPageNumber() {
     this.currentPage += 1;
-    localStorage.setItem('currentPageNumber', this.currentPage.toString());
+    this.setCurrentPageLocalStorage(this.currentPage);
     this.loadPage();
   }
 
   decrementPageNumber() {
     this.currentPage -= 1;
-    localStorage.setItem('currentPageNumber', this.currentPage.toString());
+    this.setCurrentPageLocalStorage(this.currentPage);
     this.loadPage();
+  }
+
+  setCurrentPageLocalStorage(currentPage: number) {
+    localStorage.setItem('currentPageNumber', currentPage.toString());
   }
 }

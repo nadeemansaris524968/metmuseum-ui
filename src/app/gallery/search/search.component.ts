@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -15,7 +14,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   departments: ArtDepartment[];
   departmentsSub: Subscription;
 
-  constructor(private artService: ArtService, private http: HttpClient) {}
+  constructor(private artService: ArtService) {}
 
   ngOnInit(): void {
     this.artService.getDepartments();
