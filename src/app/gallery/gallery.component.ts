@@ -41,16 +41,14 @@ export class GalleryComponent implements OnDestroy {
   }
 
   loadPage() {
-    this.paginatedArtItems$ = this.artService
-      .getPaginatedIDs(this.currentPage)
-      .pipe(
-        switchMap((objectIDs) => {
-          const requests = objectIDs.map((id) =>
-            this.artService.getArtDetails(id)
-          );
-          return forkJoin(requests);
-        })
-      );
+    this.paginatedArtItems$ = this.artService.getPaginatedIDs().pipe(
+      switchMap((objectIDs) => {
+        const requests = objectIDs.map((id) =>
+          this.artService.getArtDetails(id)
+        );
+        return forkJoin(requests);
+      })
+    );
   }
 
   incrementPageNumber() {

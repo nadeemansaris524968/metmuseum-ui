@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { ArtDepartment } from '../model/art-department.model';
 import { ArtItem } from '../model/art-item.model';
+import { PaginationService } from './pagination.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,19 +14,22 @@ export class ArtService {
   private readonly _pageSize: number;
   private artObjectIDs: number[];
 
+  artObjectIDsToDisplay: number[];
+
+  artObjectIDsToDisplayChanged = new BehaviorSubject<number[]>([]);
   artObjectIDsChanged = new BehaviorSubject<number[]>([]);
   artDepartmentsChanged = new BehaviorSubject<ArtDepartment[]>([]);
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private paginationService: PaginationService
+  ) {
     this._pageSize = 10;
   }
 
   fetchArtObjectsIDs() {
     if (this.artObjectIDs) {
-      return of({
-        total: this.artObjectIDs.length,
-        objectIDs: this.artObjectIDs,
-      });
+      return of();
     }
 
     return this.http
@@ -41,20 +45,27 @@ export class ArtService {
   getArtObjectById(objectID: number) {
     const foundIndex = this.artObjectIDs.findIndex((id) => id === objectID);
     if (foundIndex >= 0) {
+      this.artObjectIDsToDisplay = this.artObjectIDs.filter(
+        (id) => id === objectID
+      );
       this.artObjectIDs = this.artObjectIDs.filter((id) => id === objectID);
-      this.artObjectIDsChanged.next(this.artObjectIDs);
     } else {
       this.artObjectIDs = [];
-      this.artObjectIDsChanged.next(this.artObjectIDs);
+      this.artObjectIDsToDisplay = [];
     }
+    this.artObjectIDsChanged.next(this.artObjectIDs);
+    this.artObjectIDsToDisplayChanged.next(this.artObjectIDsToDisplay);
   }
 
-  getPaginatedIDs(pageNumber: number): Observable<number[]> {
+  getPaginatedIDs(): Observable<number[]> {
+    const pageNumber = this.paginationService.getCurrentPage();
     const start = (pageNumber - 1) * this._pageSize;
     const end = start + this._pageSize;
     if (!this.artObjectIDs) {
       return of([]);
     }
+    this.artObjectIDsToDisplay = this.artObjectIDs.slice(start, end);
+    this.artObjectIDsToDisplayChanged.next(this.artObjectIDsToDisplay);
     return of(this.artObjectIDs.slice(start, end));
   }
 

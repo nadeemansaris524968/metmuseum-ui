@@ -14,6 +14,10 @@ export class PaginationService {
     localStorage.setItem('currentPageNumber', this.currentPage.toString());
   }
 
+  getCurrentPage() {
+    return this.currentPage;
+  }
+
   moveToNextPage() {
     this.currentPage += 1;
     localStorage.setItem('currentPageNumber', this.currentPage.toString());
