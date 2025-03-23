@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
@@ -10,7 +10,7 @@ import { PaginationService } from './pagination.service';
   providedIn: 'root',
 })
 export class ArtService {
-  private artItemCache = new Map<number, ArtItem>();
+  private artDisplayCache = new Map<number, ArtItem>();
   private readonly _pageSize: number;
   private artObjectIDs: number[];
 
@@ -27,7 +27,7 @@ export class ArtService {
     this._pageSize = 10;
   }
 
-  fetchArtObjectsIDs() {
+  fetchAllArtObjects() {
     if (this.artObjectIDs) {
       return of();
     }
@@ -37,9 +37,23 @@ export class ArtService {
       .pipe(
         tap((data) => {
           this.artObjectIDs = data.objectIDs;
-          this.artObjectIDsChanged.next(this.artObjectIDs);
+          // this.artObjectIDsChanged.next(this.artObjectIDs);
         })
       );
+  }
+
+  getArtObjectsBySearch(searchParams: {
+    title: string;
+    departmentId: string;
+  }): Observable<{ total: number; objectIDs: number[] | null }> {
+    const params = new HttpParams()
+      .set('title', false)
+      .set('q', searchParams.title)
+      .set('departmentId', searchParams.departmentId);
+    return this.http.get<{ total: number; objectIDs: number[] | null }>(
+      environment.searchURL,
+      { params }
+    );
   }
 
   getArtObjectById(objectID: number) {
@@ -48,12 +62,12 @@ export class ArtService {
       this.artObjectIDsToDisplay = this.artObjectIDs.filter(
         (id) => id === objectID
       );
-      this.artObjectIDs = this.artObjectIDs.filter((id) => id === objectID);
+      // this.artObjectIDs = this.artObjectIDs.filter((id) => id === objectID);
     } else {
-      this.artObjectIDs = [];
+      // this.artObjectIDs = [];
       this.artObjectIDsToDisplay = [];
     }
-    this.artObjectIDsChanged.next(this.artObjectIDs);
+    // this.artObjectIDsChanged.next(this.artObjectIDs);
     this.artObjectIDsToDisplayChanged.next(this.artObjectIDsToDisplay);
   }
 
@@ -64,26 +78,26 @@ export class ArtService {
     if (!this.artObjectIDs) {
       return of([]);
     }
+    // update for single art by id retrieval
     this.artObjectIDsToDisplay = this.artObjectIDs.slice(start, end);
-    this.artObjectIDsToDisplayChanged.next(this.artObjectIDsToDisplay);
-    return of(this.artObjectIDs.slice(start, end));
+    return of(this.artObjectIDsToDisplay);
   }
 
   getArtDetails(objectID: number): Observable<ArtItem> {
-    if (this.artItemCache.has(objectID)) {
-      return of(this.artItemCache.get(objectID));
+    if (this.artDisplayCache.has(objectID)) {
+      return of(this.artDisplayCache.get(objectID));
     }
     return this.http
       .get<ArtItem>(`${environment.objectIDsURL}/${objectID}`)
       .pipe(
         tap((artItem) => {
-          this.artItemCache.set(objectID, artItem);
+          this.artDisplayCache.set(objectID, artItem);
         })
       );
   }
 
   getArtItem(objectID: number) {
-    return this.artItemCache.get(objectID);
+    return this.artDisplayCache.get(objectID);
   }
 
   getDepartments() {

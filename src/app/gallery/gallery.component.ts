@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { forkJoin, Observable, Subscription, switchMap } from 'rxjs';
+import { forkJoin, Observable, Subscription, switchMap, tap } from 'rxjs';
 import { ArtItem } from '../shared/model/art-item.model';
 import { ArtService } from '../shared/services/art.service';
 import { PaginationService } from '../shared/services/pagination.service';
@@ -30,9 +30,13 @@ export class GalleryComponent implements OnDestroy {
       }
     );
 
-    this.artObjectIDSub = this.artService.artObjectIDsChanged.subscribe(() => {
-      this.loadPage();
-    });
+    // this.artObjectIDSub = this.artService.artObjectIDsChanged.subscribe(() => {
+    //   this.loadPage();
+    // });
+    this.artObjectIDSub =
+      this.artService.artObjectIDsToDisplayChanged.subscribe(() => {
+        this.loadPage();
+      });
   }
 
   ngOnDestroy(): void {
@@ -59,9 +63,5 @@ export class GalleryComponent implements OnDestroy {
   decrementPageNumber() {
     this.paginationService.moveToPreviousPage();
     this.loadPage();
-  }
-
-  setCurrentPageLocalStorage(currentPage: number) {
-    localStorage.setItem('currentPageNumber', currentPage.toString());
   }
 }

@@ -18,13 +18,13 @@
         <div class="col-xs-6">
           <div class="form-group">
             <label for="title">Search by title</label>
-            <input type="text" id="title" class="form-control" placeholder="Search By title" ngModel name="artTitle">
+            <input type="text" id="title" class="form-control" placeholder="Search By title" ngModel name="title">
           </div>
         </div>
         <div class="col-xs-6">
           <div class="form-group">
             <label for="filter">Filter By Department</label>
-            <select id="filter" class="form-control" ngModel name="departmentID">
+            <select id="filter" class="form-control" ngModel name="departmentId">
               <option *ngFor="let dept of departments" [value]="dept.departmentId">{{dept.displayName}}</option>
             </select>
           </div>
