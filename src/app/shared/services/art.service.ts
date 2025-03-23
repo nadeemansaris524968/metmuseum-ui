@@ -13,9 +13,10 @@ export class ArtService {
   private artDisplayCache = new Map<number, ArtItem>();
   private readonly _pageSize: number;
   private artObjectIDs: number[];
+  private artObjectIDsToDisplay: number[];
+  totalArtObjects: number;
 
-  artObjectIDsToDisplay: number[];
-
+  totalArtObjectsChanged = new BehaviorSubject<number>(0);
   artObjectIDsToDisplayChanged = new BehaviorSubject<number[]>([]);
   artDepartmentsChanged = new BehaviorSubject<ArtDepartment[]>([]);
 
@@ -35,7 +36,9 @@ export class ArtService {
       .get<{ total: number; objectIDs: number[] }>(environment.objectIDsURL)
       .pipe(
         tap((data) => {
+          this.totalArtObjects = data.total;
           this.artObjectIDs = data.objectIDs;
+          this.totalArtObjectsChanged.next(this.totalArtObjects);
         })
       );
   }
@@ -52,6 +55,8 @@ export class ArtService {
         { params }
       )
       .subscribe((data) => {
+        this.totalArtObjects = data.total;
+        this.totalArtObjectsChanged.next(this.totalArtObjects);
         this.artObjectIDs = data.objectIDs ? data.objectIDs : [];
         this.artObjectIDsToDisplayChanged.next(this.artObjectIDs);
       });
@@ -66,6 +71,8 @@ export class ArtService {
     } else {
       this.artObjectIDsToDisplay = [];
     }
+    this.totalArtObjects = this.artObjectIDsToDisplay.length;
+    this.totalArtObjectsChanged.next(this.totalArtObjects);
     this.artObjectIDsToDisplayChanged.next(this.artObjectIDsToDisplay);
   }
 
