@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { EventEmitter, Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PaginationService {
-  currentPageChanged = new BehaviorSubject<number>(1);
+  currentPageChanged = new EventEmitter<number>();
   private currentPage: number;
   constructor() {
     this.currentPage = localStorage.getItem('currentPageNumber')
@@ -21,18 +20,18 @@ export class PaginationService {
   resetCurrentPage() {
     localStorage.setItem('currentPageNumber', '1');
     this.currentPage = 1;
-    this.currentPageChanged.next(this.currentPage);
+    this.currentPageChanged.emit(this.currentPage);
   }
 
   moveToNextPage() {
     this.currentPage += 1;
     localStorage.setItem('currentPageNumber', this.currentPage.toString());
-    this.currentPageChanged.next(this.currentPage);
+    this.currentPageChanged.emit(this.currentPage);
   }
 
   moveToPreviousPage() {
     this.currentPage -= 1;
     localStorage.setItem('currentPageNumber', this.currentPage.toString());
-    this.currentPageChanged.next(this.currentPage);
+    this.currentPageChanged.emit(this.currentPage);
   }
 }
