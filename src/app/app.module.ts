@@ -12,6 +12,7 @@ import { ArtListComponent } from './gallery/art-list/art-list.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { SearchComponent } from './gallery/search/search.component';
 import { HeaderComponent } from './header/header.component';
+import { PaginationControlsComponent } from './gallery/pagination-controls/pagination-controls.component';
 
 const appRoutes: Routes = [
   {
@@ -42,6 +43,7 @@ const appRoutes: Routes = [
     ArtItemComponent,
     GalleryComponent,
     ArtDetailComponent,
+    PaginationControlsComponent,
   ],
   imports: [
     BrowserModule,
