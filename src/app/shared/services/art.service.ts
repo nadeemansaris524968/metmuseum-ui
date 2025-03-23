@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { ArtDepartment } from '../model/art-department.model';
@@ -16,7 +16,7 @@ export class ArtService {
 
   artObjectIDsToDisplay: number[];
 
-  artObjectIDsToDisplayChanged = new EventEmitter<void>();
+  artObjectIDsToDisplayChanged = new BehaviorSubject<number[]>([]);
   artDepartmentsChanged = new BehaviorSubject<ArtDepartment[]>([]);
 
   constructor(
@@ -53,7 +53,7 @@ export class ArtService {
       )
       .subscribe((data) => {
         this.artObjectIDs = data.objectIDs ? data.objectIDs : [];
-        this.artObjectIDsToDisplayChanged.emit();
+        this.artObjectIDsToDisplayChanged.next(this.artObjectIDs);
       });
   }
 
@@ -66,7 +66,7 @@ export class ArtService {
     } else {
       this.artObjectIDsToDisplay = [];
     }
-    this.artObjectIDsToDisplayChanged.emit();
+    this.artObjectIDsToDisplayChanged.next(this.artObjectIDsToDisplay);
   }
 
   getPaginatedIDs(): Observable<number[]> {
