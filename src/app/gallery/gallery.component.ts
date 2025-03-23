@@ -30,9 +30,6 @@ export class GalleryComponent implements OnDestroy {
       }
     );
 
-    // this.artObjectIDSub = this.artService.artObjectIDsChanged.subscribe(() => {
-    //   this.loadPage();
-    // });
     this.artObjectIDSub =
       this.artService.artObjectIDsToDisplayChanged.subscribe(() => {
         this.loadPage();

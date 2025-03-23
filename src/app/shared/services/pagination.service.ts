@@ -18,6 +18,12 @@ export class PaginationService {
     return this.currentPage;
   }
 
+  resetCurrentPage() {
+    localStorage.setItem('currentPageNumber', '1');
+    this.currentPage = 1;
+    this.currentPageChanged.next(this.currentPage);
+  }
+
   moveToNextPage() {
     this.currentPage += 1;
     localStorage.setItem('currentPageNumber', this.currentPage.toString());

@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { ArtDepartment } from '../model/art-department.model';
@@ -16,8 +16,7 @@ export class ArtService {
 
   artObjectIDsToDisplay: number[];
 
-  artObjectIDsToDisplayChanged = new BehaviorSubject<number[]>([]);
-  artObjectIDsChanged = new BehaviorSubject<number[]>([]);
+  artObjectIDsToDisplayChanged = new EventEmitter<void>();
   artDepartmentsChanged = new BehaviorSubject<ArtDepartment[]>([]);
 
   constructor(
@@ -37,23 +36,25 @@ export class ArtService {
       .pipe(
         tap((data) => {
           this.artObjectIDs = data.objectIDs;
-          // this.artObjectIDsChanged.next(this.artObjectIDs);
         })
       );
   }
 
-  getArtObjectsBySearch(searchParams: {
-    title: string;
-    departmentId: string;
-  }): Observable<{ total: number; objectIDs: number[] | null }> {
+  getArtObjectsBySearch(searchParams: { title: string; departmentId: string }) {
+    this.paginationService.resetCurrentPage();
     const params = new HttpParams()
       .set('title', false)
       .set('q', searchParams.title)
       .set('departmentId', searchParams.departmentId);
-    return this.http.get<{ total: number; objectIDs: number[] | null }>(
-      environment.searchURL,
-      { params }
-    );
+    this.http
+      .get<{ total: number; objectIDs: number[] | null }>(
+        environment.searchURL,
+        { params }
+      )
+      .subscribe((data) => {
+        this.artObjectIDs = data.objectIDs ? data.objectIDs : [];
+        this.artObjectIDsToDisplayChanged.emit();
+      });
   }
 
   getArtObjectById(objectID: number) {
@@ -62,13 +63,10 @@ export class ArtService {
       this.artObjectIDsToDisplay = this.artObjectIDs.filter(
         (id) => id === objectID
       );
-      // this.artObjectIDs = this.artObjectIDs.filter((id) => id === objectID);
     } else {
-      // this.artObjectIDs = [];
       this.artObjectIDsToDisplay = [];
     }
-    // this.artObjectIDsChanged.next(this.artObjectIDs);
-    this.artObjectIDsToDisplayChanged.next(this.artObjectIDsToDisplay);
+    this.artObjectIDsToDisplayChanged.emit();
   }
 
   getPaginatedIDs(): Observable<number[]> {
