@@ -10,9 +10,10 @@ import { ArtDetailComponent } from './gallery/art-detail/art-detail.component';
 import { ArtItemComponent } from './gallery/art-list/art-item/art-item.component';
 import { ArtListComponent } from './gallery/art-list/art-list.component';
 import { GalleryComponent } from './gallery/gallery.component';
+import { PaginationControlsComponent } from './gallery/pagination-controls/pagination-controls.component';
 import { SearchComponent } from './gallery/search/search.component';
 import { HeaderComponent } from './header/header.component';
-import { PaginationControlsComponent } from './gallery/pagination-controls/pagination-controls.component';
+import { ShortenTitlePipe } from './shared/pipes/shorten-title.pipe';
 
 const appRoutes: Routes = [
   {
@@ -44,6 +45,7 @@ const appRoutes: Routes = [
     GalleryComponent,
     ArtDetailComponent,
     PaginationControlsComponent,
+    ShortenTitlePipe,
   ],
   imports: [
     BrowserModule,

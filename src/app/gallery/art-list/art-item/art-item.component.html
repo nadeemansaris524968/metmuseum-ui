@@ -6,7 +6,7 @@
           class="img-responsive" style="max-height: 200px; min-height: 200px;">
       </a>
       <div class="caption">
-        <h4>{{artItem.title || 'No Title'}}</h4>
+        <h4>{{artItem.title | shorten}}</h4>
         <p>
           <a [routerLink]="['/art-detail', artItem.objectID]" class="btn btn-default">View</a>
         </p>
