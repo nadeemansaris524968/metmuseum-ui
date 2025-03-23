@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { GalleryDisplayMode } from '../enum/gallery-display-mode.enum';
 import { ArtDepartment } from '../model/art-department.model';
 import { ArtItem } from '../model/art-item.model';
 import { PaginationService } from './pagination.service';
@@ -15,6 +16,7 @@ export class ArtService {
   private artObjectIDs: number[];
   private artObjectIDsToDisplay: number[];
   totalArtObjects: number;
+  displayMode: GalleryDisplayMode = GalleryDisplayMode.ALL;
 
   totalArtObjectsChanged = new BehaviorSubject<number>(0);
   artObjectIDsToDisplayChanged = new BehaviorSubject<number[]>([]);
@@ -71,6 +73,7 @@ export class ArtService {
     } else {
       this.artObjectIDsToDisplay = [];
     }
+    this.displayMode = GalleryDisplayMode.SINGLE;
     this.totalArtObjects = this.artObjectIDsToDisplay.length;
     this.totalArtObjectsChanged.next(this.totalArtObjects);
     this.artObjectIDsToDisplayChanged.next(this.artObjectIDsToDisplay);
@@ -83,8 +86,11 @@ export class ArtService {
     if (!this.artObjectIDs) {
       return of([]);
     }
-    // update for single art by id retrieval
-    this.artObjectIDsToDisplay = this.artObjectIDs.slice(start, end);
+
+    if (this.displayMode === GalleryDisplayMode.ALL) {
+      this.artObjectIDsToDisplay = this.artObjectIDs.slice(start, end);
+    }
+
     return of(this.artObjectIDsToDisplay);
   }
 
