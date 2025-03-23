@@ -11,24 +11,16 @@ import { PaginationService } from '../shared/services/pagination.service';
   styleUrl: './gallery.component.css',
 })
 export class GalleryComponent implements OnDestroy {
-  currentPage: number;
   paginatedArtItems$: Observable<ArtItem[]> = new Observable();
   artObjectIDSub: Subscription;
-  currentPgSub: Subscription;
 
   constructor(
     private artService: ArtService,
     private paginationService: PaginationService
   ) {
-    this.artService.fetchAllArtObjects().subscribe(() => {
+    this.artService.fetchAllArtData().subscribe(() => {
       this.loadPage();
     });
-
-    this.currentPgSub = this.paginationService.currentPageChanged.subscribe(
-      (updatedPgNo) => {
-        this.currentPage = updatedPgNo;
-      }
-    );
 
     this.artObjectIDSub =
       this.artService.artObjectIDsToDisplayChanged.subscribe(() => {
@@ -38,7 +30,6 @@ export class GalleryComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.artObjectIDSub.unsubscribe();
-    this.currentPgSub.unsubscribe();
   }
 
   loadPage() {

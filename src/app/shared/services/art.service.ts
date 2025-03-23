@@ -15,9 +15,9 @@ export class ArtService {
   private readonly _pageSize: number;
   private artObjectIDs: number[];
   private artObjectIDsToDisplay: number[];
-  totalArtObjects: number;
-  displayMode: GalleryDisplayMode = GalleryDisplayMode.ALL;
+  private displayMode: GalleryDisplayMode = GalleryDisplayMode.ALL;
 
+  totalArtObjects: number;
   totalArtObjectsChanged = new BehaviorSubject<number>(0);
   artObjectIDsToDisplayChanged = new BehaviorSubject<number[]>([]);
   artDepartmentsChanged = new BehaviorSubject<ArtDepartment[]>([]);
@@ -29,13 +29,13 @@ export class ArtService {
     this._pageSize = 10;
   }
 
-  fetchAllArtObjects() {
+  fetchAllArtData() {
     if (this.artObjectIDs) {
       return of();
     }
 
     return this.http
-      .get<{ total: number; objectIDs: number[] }>(environment.objectIDsURL)
+      .get<{ total: number; objectIDs: number[] }>(environment.objectURL)
       .pipe(
         tap((data) => {
           this.totalArtObjects = data.total;
@@ -45,8 +45,24 @@ export class ArtService {
       );
   }
 
-  getArtObjectsBySearch(searchParams: { title: string; departmentId: string }) {
+  private handleResults(
+    displayMode: GalleryDisplayMode,
+    data: { total: number; objectIDs: number[] | null } | ArtItem
+  ) {
     this.paginationService.resetCurrentPage();
+    this.displayMode = displayMode;
+    if (data instanceof ArtItem) {
+      this.totalArtObjects = 1;
+      this.artObjectIDs = [data.objectID];
+    } else {
+      this.totalArtObjects = data.total;
+      this.artObjectIDs = data.objectIDs ? data.objectIDs : [];
+    }
+    this.totalArtObjectsChanged.next(this.totalArtObjects);
+    this.artObjectIDsToDisplayChanged.next(this.artObjectIDs);
+  }
+
+  getArtObjectsBySearch(searchParams: { title: string; departmentId: string }) {
     const params = new HttpParams()
       .set('title', false)
       .set('q', searchParams.title)
@@ -57,6 +73,8 @@ export class ArtService {
         { params }
       )
       .subscribe((data) => {
+        this.paginationService.resetCurrentPage();
+        this.displayMode = GalleryDisplayMode.ALL;
         this.totalArtObjects = data.total;
         this.totalArtObjectsChanged.next(this.totalArtObjects);
         this.artObjectIDs = data.objectIDs ? data.objectIDs : [];
@@ -65,18 +83,19 @@ export class ArtService {
   }
 
   getArtObjectById(objectID: number) {
-    const foundIndex = this.artObjectIDs.findIndex((id) => id === objectID);
-    if (foundIndex >= 0) {
-      this.artObjectIDsToDisplay = this.artObjectIDs.filter(
-        (id) => id === objectID
-      );
-    } else {
-      this.artObjectIDsToDisplay = [];
-    }
-    this.displayMode = GalleryDisplayMode.SINGLE;
-    this.totalArtObjects = this.artObjectIDsToDisplay.length;
-    this.totalArtObjectsChanged.next(this.totalArtObjects);
-    this.artObjectIDsToDisplayChanged.next(this.artObjectIDsToDisplay);
+    this.http.get<ArtItem>(`${environment.objectURL}/${objectID}`).subscribe(
+      (data) => {
+        this.paginationService.resetCurrentPage();
+        this.displayMode = GalleryDisplayMode.SINGLE;
+        this.totalArtObjects = 1;
+        this.totalArtObjectsChanged.next(this.totalArtObjects);
+        this.artObjectIDs = [data.objectID];
+        this.artObjectIDsToDisplayChanged.next(this.artObjectIDs);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   getPaginatedIDs(): Observable<number[]> {
@@ -87,8 +106,13 @@ export class ArtService {
       return of([]);
     }
 
-    if (this.displayMode === GalleryDisplayMode.ALL) {
-      this.artObjectIDsToDisplay = this.artObjectIDs.slice(start, end);
+    switch (this.displayMode) {
+      case GalleryDisplayMode.ALL:
+        this.artObjectIDsToDisplay = this.artObjectIDs.slice(start, end);
+        break;
+      case GalleryDisplayMode.SINGLE:
+        this.artObjectIDsToDisplay = this.artObjectIDs;
+        break;
     }
 
     return of(this.artObjectIDsToDisplay);
@@ -98,13 +122,11 @@ export class ArtService {
     if (this.artDisplayCache.has(objectID)) {
       return of(this.artDisplayCache.get(objectID));
     }
-    return this.http
-      .get<ArtItem>(`${environment.objectIDsURL}/${objectID}`)
-      .pipe(
-        tap((artItem) => {
-          this.artDisplayCache.set(objectID, artItem);
-        })
-      );
+    return this.http.get<ArtItem>(`${environment.objectURL}/${objectID}`).pipe(
+      tap((artItem) => {
+        this.artDisplayCache.set(objectID, artItem);
+      })
+    );
   }
 
   getArtItem(objectID: number) {
