@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ArtItem } from '../../shared/model/art-item.model';
-import { ArtService } from '../../shared/services/art.service';
+import { ArtItem } from '../shared/model/art-item.model';
+import { ArtService } from '../shared/services/art.service';
 
 @Component({
   selector: 'app-mm-result-detail',

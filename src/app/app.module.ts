@@ -6,7 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './about/about.component';
 import { AppComponent } from './app.component';
-import { ArtDetailComponent } from './gallery/art-detail/art-detail.component';
+import { ArtDetailComponent } from './art-detail/art-detail.component';
 import { ArtItemComponent } from './gallery/art-item/art-item.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { PaginationControlsComponent } from './gallery/pagination-controls/pagination-controls.component';
