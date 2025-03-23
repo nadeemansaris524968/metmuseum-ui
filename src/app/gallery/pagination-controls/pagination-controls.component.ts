@@ -42,6 +42,10 @@ export class PaginationControlsComponent implements OnInit, OnDestroy {
     );
   }
 
+  getTotalPages() {
+    return Math.ceil(this.totalResults / 10);
+  }
+
   ngOnDestroy(): void {
     this.currentPageSub.unsubscribe();
     this.totalResultsSub.unsubscribe();
