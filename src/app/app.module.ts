@@ -8,7 +8,6 @@ import { AboutComponent } from './about/about.component';
 import { AppComponent } from './app.component';
 import { ArtDetailComponent } from './gallery/art-detail/art-detail.component';
 import { ArtItemComponent } from './gallery/art-item/art-item.component';
-import { ArtListComponent } from './gallery/art-list/art-list.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { PaginationControlsComponent } from './gallery/pagination-controls/pagination-controls.component';
 import { SearchComponent } from './gallery/search/search.component';
@@ -40,7 +39,6 @@ const appRoutes: Routes = [
     AppComponent,
     HeaderComponent,
     SearchComponent,
-    ArtListComponent,
     ArtItemComponent,
     GalleryComponent,
     ArtDetailComponent,
