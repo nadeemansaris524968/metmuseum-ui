@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { forkJoin, Observable, Subscription, switchMap, tap } from 'rxjs';
+import { forkJoin, Observable, Subscription, switchMap } from 'rxjs';
 import { ArtItem } from '../shared/model/art-item.model';
 import { ArtService } from '../shared/services/art.service';
 import { PaginationService } from '../shared/services/pagination.service';
@@ -20,7 +20,7 @@ export class GalleryComponent implements OnDestroy {
     private artService: ArtService,
     private paginationService: PaginationService
   ) {
-    this.artService.fetchArtObjectsIDs().subscribe(() => {
+    this.artService.fetchAllArtObjects().subscribe(() => {
       this.loadPage();
     });
 
