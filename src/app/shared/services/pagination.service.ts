@@ -5,8 +5,11 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class PaginationService {
-  currentPageChanged = new BehaviorSubject<number>(0);
   private currentPage: number;
+  private pageSize = 20;
+
+  currentPageChanged = new BehaviorSubject<number>(0);
+
   constructor() {
     this.currentPage = localStorage.getItem('currentPageNumber')
       ? parseInt(localStorage.getItem('currentPageNumber'))
@@ -17,6 +20,10 @@ export class PaginationService {
 
   getCurrentPage() {
     return this.currentPage;
+  }
+
+  getPageSize() {
+    return this.pageSize;
   }
 
   resetCurrentPage() {

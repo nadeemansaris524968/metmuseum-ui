@@ -26,7 +26,7 @@ export class ArtService {
     private http: HttpClient,
     private paginationService: PaginationService
   ) {
-    this._pageSize = 10;
+    this._pageSize = this.paginationService.getPageSize();
   }
 
   fetchAllArtData() {

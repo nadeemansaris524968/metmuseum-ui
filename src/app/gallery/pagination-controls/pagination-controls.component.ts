@@ -16,6 +16,7 @@ import { PaginationService } from '../../shared/services/pagination.service';
   styleUrl: './pagination-controls.component.css',
 })
 export class PaginationControlsComponent implements OnInit, OnDestroy {
+  private _pageSize: number;
   currentPage: number;
   totalResults: number;
   currentPageSub: Subscription;
@@ -27,7 +28,9 @@ export class PaginationControlsComponent implements OnInit, OnDestroy {
   constructor(
     private paginationService: PaginationService,
     private artService: ArtService
-  ) {}
+  ) {
+    this._pageSize = this.paginationService.getPageSize();
+  }
 
   ngOnInit(): void {
     this.currentPageSub = this.paginationService.currentPageChanged.subscribe(
@@ -43,7 +46,7 @@ export class PaginationControlsComponent implements OnInit, OnDestroy {
   }
 
   getTotalPages() {
-    return Math.ceil(this.totalResults / 10);
+    return Math.ceil(this.totalResults / this._pageSize);
   }
 
   ngOnDestroy(): void {
