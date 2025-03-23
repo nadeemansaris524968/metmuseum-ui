@@ -72,30 +72,18 @@ export class ArtService {
         environment.searchURL,
         { params }
       )
-      .subscribe((data) => {
-        this.paginationService.resetCurrentPage();
-        this.displayMode = GalleryDisplayMode.ALL;
-        this.totalArtObjects = data.total;
-        this.totalArtObjectsChanged.next(this.totalArtObjects);
-        this.artObjectIDs = data.objectIDs ? data.objectIDs : [];
-        this.artObjectIDsToDisplayChanged.next(this.artObjectIDs);
-      });
+      .subscribe((data) => this.handleResults(GalleryDisplayMode.ALL, data));
   }
 
   getArtObjectById(objectID: number) {
-    this.http.get<ArtItem>(`${environment.objectURL}/${objectID}`).subscribe(
-      (data) => {
-        this.paginationService.resetCurrentPage();
-        this.displayMode = GalleryDisplayMode.SINGLE;
-        this.totalArtObjects = 1;
-        this.totalArtObjectsChanged.next(this.totalArtObjects);
-        this.artObjectIDs = [data.objectID];
-        this.artObjectIDsToDisplayChanged.next(this.artObjectIDs);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    this.http
+      .get<ArtItem>(`${environment.objectURL}/${objectID}`)
+      .subscribe((data) =>
+        this.handleResults(
+          GalleryDisplayMode.SINGLE,
+          new ArtItem(data.objectID)
+        )
+      );
   }
 
   getPaginatedIDs(): Observable<number[]> {
