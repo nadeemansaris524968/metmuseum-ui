@@ -12,5 +12,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     localStorage.removeItem(AppConstants.CURRENT_PAGE_NUMBER);
+    localStorage.removeItem(AppConstants.ID_QUERY);
+    localStorage.removeItem(AppConstants.DEPARTMENT_QUERY);
   }
 }
