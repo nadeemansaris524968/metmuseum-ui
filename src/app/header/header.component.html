@@ -4,7 +4,7 @@
       <button type="button" class="navbar-toggle" (click)="toggleNavbar()">
         <span class="icon-bar" *ngFor="let icon of [1, 2, 3]"></span>
       </button>
-      <a class="navbar-brand" href="#">Met Museum UI</a>
+      <a class="navbar-brand" [routerLink]="['/']">Met Museum UI</a>
     </div>
     <div class="collapse navbar-collapse" [ngStyle]="{'display': isNavbarOpen ? 'block': 'none'}">
       <ul class="nav navbar-nav navbar-right">

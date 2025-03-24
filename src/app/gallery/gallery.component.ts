@@ -1,13 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import {
-  catchError,
-  forkJoin,
-  map,
-  Observable,
-  of,
-  Subscription,
-  switchMap,
-} from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ArtItem } from '../shared/model/art-item.model';
 import { ArtService } from '../shared/services/art.service';
 import { PaginationService } from '../shared/services/pagination.service';
@@ -41,16 +33,7 @@ export class GalleryComponent implements OnDestroy {
   }
 
   loadPage() {
-    this.paginatedArtItems$ = this.artService.getPaginatedIDs().pipe(
-      switchMap((objectIDs) => {
-        const requests = objectIDs.map((id) =>
-          this.artService.getArtDetails(id).pipe(catchError(() => of(null)))
-        );
-        return forkJoin(requests).pipe(
-          map((results: ArtItem[]) => results.filter((item) => item !== null))
-        );
-      })
-    );
+    this.paginatedArtItems$ = this.artService.getPaginatedIDs();
   }
 
   incrementPageNumber() {

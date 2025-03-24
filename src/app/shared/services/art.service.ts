@@ -1,6 +1,15 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  forkJoin,
+  map,
+  Observable,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { GalleryDisplayMode } from '../enum/gallery-display-mode.enum';
 import { ArtDepartment } from '../model/art-department.model';
@@ -86,7 +95,7 @@ export class ArtService {
       );
   }
 
-  getPaginatedIDs(): Observable<number[]> {
+  getPaginatedIDs(): Observable<ArtItem[]> {
     const pageNumber = this.paginationService.getCurrentPage();
     const start = (pageNumber - 1) * this._pageSize;
     const end = start + this._pageSize;
@@ -103,7 +112,16 @@ export class ArtService {
         break;
     }
 
-    return of(this.artObjectIDsToDisplay);
+    return of(this.artObjectIDsToDisplay).pipe(
+      switchMap((objectIDs) => {
+        const requests = objectIDs.map((id) =>
+          this.getArtDetails(id).pipe(catchError(() => of(null)))
+        );
+        return forkJoin(requests).pipe(
+          map((results: ArtItem[]) => results.filter((item) => item !== null))
+        );
+      })
+    );
   }
 
   getArtDetails(objectID: number): Observable<ArtItem> {
