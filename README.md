@@ -1,6 +1,6 @@
 # MetmuseumUi
 
-Visit https://metmuseum-ui.web.app/gallery
+Visit <a href="https://metmuseum-ui.web.app/gallery" target="_blank">Met Museum UI</a>
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.4.
 
