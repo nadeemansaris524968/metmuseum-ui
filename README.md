@@ -1,6 +1,6 @@
 # MetmuseumUi
 
-Visit https://www.metmuseum-ui.web.app
+Visit https://metmuseum-ui.web.app/gallery
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.4.
 
