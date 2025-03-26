@@ -12,6 +12,7 @@ import { GalleryComponent } from './gallery/gallery.component';
 import { PaginationControlsComponent } from './gallery/pagination-controls/pagination-controls.component';
 import { SearchComponent } from './gallery/search/search.component';
 import { HeaderComponent } from './header/header.component';
+import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 import { ShortenTitlePipe } from './shared/pipes/shorten-title.pipe';
 
 const appRoutes: Routes = [
@@ -32,6 +33,10 @@ const appRoutes: Routes = [
     path: 'about',
     component: AboutComponent,
   },
+  {
+    path: '**',
+    component: PageNotFoundComponent,
+  },
 ];
 
 @NgModule({
@@ -44,6 +49,7 @@ const appRoutes: Routes = [
     ArtDetailComponent,
     PaginationControlsComponent,
     ShortenTitlePipe,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
