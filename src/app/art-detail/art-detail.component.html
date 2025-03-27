@@ -4,7 +4,7 @@
   </div>
 </div>
 <hr>
-<div class="row" *ngIf="artItem; else noData">
+<div class="row" *ngIf="artItem | async as artItem; else noData">
   <div class="row">
     <div class="col-xs-12" style="text-align: -webkit-center;">
       <img [src]="artItem.primaryImage || '/no-image-found.png'" style="max-height: 500px;" [alt]="artItem.title"
