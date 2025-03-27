@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ArtItem } from '../shared/model/art-item.model';
-import { ArtService } from '../shared/services/art.service';
 
 @Component({
   selector: 'app-mm-result-detail',
@@ -11,21 +10,18 @@ import { ArtService } from '../shared/services/art.service';
   styleUrl: './art-detail.component.css',
 })
 export class ArtDetailComponent implements OnInit, OnDestroy {
-  private routeParamSub: Subscription;
+  private routeDataSub: Subscription;
   artItem: ArtItem;
 
-  constructor(private route: ActivatedRoute, private artService: ArtService) {}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.artItem = this.artService.getArtItem(
-      parseInt(this.route.snapshot.params['id'])
-    );
-    this.routeParamSub = this.route.params.subscribe((params) => {
-      this.artItem = this.artService.getArtItem(parseInt(params['id']));
+    this.routeDataSub = this.route.data.subscribe((data) => {
+      this.artItem = data['artItem'];
     });
   }
 
   ngOnDestroy(): void {
-    this.routeParamSub.unsubscribe();
+    this.routeDataSub.unsubscribe();
   }
 }

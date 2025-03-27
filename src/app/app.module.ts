@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './about/about.component';
 import { AppComponent } from './app.component';
+import { ArtDetailResolverService } from './art-detail/art-detail-resolver.service';
 import { ArtDetailComponent } from './art-detail/art-detail.component';
 import { ArtItemComponent } from './gallery/art-item/art-item.component';
 import { GalleryComponent } from './gallery/gallery.component';
@@ -28,6 +29,7 @@ const appRoutes: Routes = [
   {
     path: 'art-detail/:id',
     component: ArtDetailComponent,
+    resolve: { artItem: ArtDetailResolverService },
   },
   {
     path: 'about',
