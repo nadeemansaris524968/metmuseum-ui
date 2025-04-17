@@ -21,6 +21,7 @@ export class PaginationControlsComponent implements OnInit, OnDestroy {
   totalResults: number;
   currentPageSub: Subscription;
   totalResultsSub: Subscription;
+  pageSizeSub: Subscription;
 
   @Output() moveToNextPage = new EventEmitter<void>();
   @Output() moveToPreviousPage = new EventEmitter<void>();
@@ -28,9 +29,7 @@ export class PaginationControlsComponent implements OnInit, OnDestroy {
   constructor(
     private paginationService: PaginationService,
     private artService: ArtService
-  ) {
-    this._pageSize = this.paginationService.getPageSize();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.currentPageSub = this.paginationService.currentPageChanged.subscribe(
@@ -43,6 +42,13 @@ export class PaginationControlsComponent implements OnInit, OnDestroy {
         this.totalResults = updatedTotalResults;
       }
     );
+
+    this.currentPageSub =
+      this.paginationService.currentPageSizeChanged.subscribe(
+        (updatedPageSize) => {
+          this._pageSize = updatedPageSize;
+        }
+      );
   }
 
   getTotalPages() {
@@ -52,5 +58,6 @@ export class PaginationControlsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.currentPageSub.unsubscribe();
     this.totalResultsSub.unsubscribe();
+    this.pageSizeSub.unsubscribe();
   }
 }

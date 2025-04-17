@@ -10,6 +10,7 @@ export class PaginationService {
   private pageSize = 10;
 
   currentPageChanged = new BehaviorSubject<number>(0);
+  currentPageSizeChanged = new BehaviorSubject<number>(10);
 
   constructor() {
     this.currentPage = localStorage.getItem(AppConstants.CURRENT_PAGE_NUMBER)

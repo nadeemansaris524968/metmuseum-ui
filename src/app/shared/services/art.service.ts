@@ -21,7 +21,7 @@ import { PaginationService } from './pagination.service';
 })
 export class ArtService {
   private artDisplayCache = new Map<number, ArtItem>();
-  private readonly _pageSize: number;
+  private _pageSize: number;
   private artObjectIDs: number[];
   private artObjectIDsToDisplay: number[];
   private displayMode: GalleryDisplayMode = GalleryDisplayMode.ALL;
@@ -35,7 +35,11 @@ export class ArtService {
     private http: HttpClient,
     private paginationService: PaginationService
   ) {
-    this._pageSize = this.paginationService.getPageSize();
+    this.paginationService.currentPageSizeChanged.subscribe(
+      (updatedPageSize) => {
+        this._pageSize = updatedPageSize;
+      }
+    );
   }
 
   fetchAllArtData() {

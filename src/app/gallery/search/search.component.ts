@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { AppConstants } from '../../shared/constants/AppConstants';
 import { ArtDepartment } from '../../shared/model/art-department.model';
 import { ArtService } from '../../shared/services/art.service';
+import { PaginationService } from '../../shared/services/pagination.service';
 
 @Component({
   selector: 'app-search',
@@ -17,10 +18,14 @@ export class SearchComponent implements OnInit, OnDestroy {
   idQuery: number;
   titleQuery: string = '';
   departmentIdQuery: number;
+  pageSizeQuery: number;
   @ViewChild('searchById') searchByIdForm: NgForm;
   @ViewChild('searchByOther') searchByOtherForm: NgForm;
 
-  constructor(private artService: ArtService) {}
+  constructor(
+    private artService: ArtService,
+    private paginationService: PaginationService
+  ) {}
 
   ngOnInit(): void {
     if (localStorage.getItem(AppConstants.ID_QUERY)) {
@@ -47,6 +52,10 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   onSubmitByOther(searchByOtherForm: NgForm) {
+    this.paginationService.currentPageSizeChanged.next(
+      searchByOtherForm.value['pageSize']
+    );
+
     this.artService.getArtObjectsBySearch(searchByOtherForm.value);
     localStorage.setItem(
       AppConstants.DEPARTMENT_QUERY,

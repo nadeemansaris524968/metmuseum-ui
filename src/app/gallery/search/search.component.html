@@ -15,18 +15,27 @@
     <h4 style="text-align: center;">OR</h4>
     <form (ngSubmit)="onSubmitByOther(searchByOther)" #searchByOther="ngForm">
       <div class="row">
-        <div class="col-xs-6">
+        <div class="col-xs-4">
           <div class="form-group">
             <label for="title">Search by title</label>
             <input type="text" id="title" class="form-control" placeholder="Search By title" [(ngModel)]="titleQuery"
               name="title">
           </div>
         </div>
-        <div class="col-xs-6">
+        <div class="col-xs-4">
           <div class="form-group">
             <label for="filter">Filter By Department</label>
             <select id="filter" class="form-control" [(ngModel)]="departmentIdQuery" name="departmentId">
               <option *ngFor="let dept of departments" [value]="dept.departmentId">{{dept.displayName}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <div class="form-group">
+            <label for="pageSize">Page Size</label>
+            <select name="pageSize" id="pageSize" class="form-control" [(ngModel)]="pageSizeQuery">
+              <option value="10">10</option>
+              <option value="20">20</option>
             </select>
           </div>
         </div>
